@@ -1,0 +1,162 @@
+  public class Main {
+
+            public static class PriorityQueue {
+                ArrayList<Integer> data;
+
+             public PriorityQueue() {
+                    data = new ArrayList<>();
+                }
+
+                public void add(int val) {
+                    data.add(val);
+                    upheapify(data.size()-1);
+                }
+
+                public void upheapify(int childIdx){
+                    if(childIdx == 0) return;
+
+                    int parentIdx = (childIdx - 1)/2;
+
+                    if(data.get(childIdx) < data.get(parentIdx)){
+                        swap(childIdx,parentIdx);
+                        upheapify(parentIdx);
+                    }
+                }
+
+                public void swap(int i, int j){
+                    int ith = data.get(i);
+                    int jth = data.get(j);
+
+                    data.set(i,jth);
+                    data.set(j,ith);
+                }
+
+                public int remove() {
+                    if(this.size() == 0){
+                        System.out.println("Underflow");
+                        return -1;
+                    }
+                    swap(0,data.size()-1);
+                    int val = data.remove(data.size()-1);
+                    downheapify(0);
+                    return val;
+                }
+
+                public void downheapify(int parentIdx){
+                    int leftIdx = (2*parentIdx) + 1;
+                    int rightIdx = (2 * parentIdx) + 2;
+
+                    int smallVal = parentIdx;
+
+                    if(leftIdx < data.size() && data.get(leftIdx) < data.get(smallVal)){
+                        smallVal = leftIdx;
+                    }
+
+                    if(rightIdx < data.size() && data.get(rightIdx) < data.get(smallVal)){
+                        smallVal = rightIdx;
+                    }
+
+                    if(smallVal != parentIdx){
+                        swap(smallVal, parentIdx);
+                        downheapify(smallVal);
+                    }
+
+                }
+
+                public int peek() {
+                    if(data.size() == 0){
+                        System.out.println("Underflow");
+                        return -1;
+                    }
+                    return data.get(0);
+                }
+
+                public int size() {
+                    return data.size();
+                }
+            }
+ =============================================================================================================================================================================
+ 						//OPTIMIZE VERSION OF ABOVE CODE//
+
+    public static class PriorityQueue {
+        ArrayList < Integer > data = new ArrayList < > ();
+
+        public PriorityQueue(int [] arr) {
+            for(int val : arr){
+                data.add(val);
+            }
+            for(int i = (data.size() - 2) / 2; i >= 0; i--){
+                downheapify(i);
+            }
+        }
+
+        public void add(int val) {
+            data.add(val);
+            upheapify(data.size() - 1);
+        }
+
+        public void upheapify(int childIdx) {
+            if (childIdx == 0) return;
+
+            int parentIdx = (childIdx - 1) / 2;
+
+            if (data.get(childIdx) < data.get(parentIdx)) {
+                swap(childIdx, parentIdx);
+                upheapify(parentIdx);
+            }
+        }
+
+        private void swap(int i, int j) {
+            int ith = data.get(i);
+            int jth = data.get(j);
+
+            data.set(i, jth);
+            data.set(j, ith);
+        }
+
+        public int remove() {
+            if(this.size() == 0){
+                System.out.println("Underflow");
+                return -1;
+            }
+            swap(0, data.size() - 1);
+            int val = data.remove(data.size() - 1);
+            downheapify(0);
+            return val;
+        }
+
+        public void downheapify(int parentIdx) {
+            int leftIdx = (2 * parentIdx) + 1;
+            int rightIdx = (2 * parentIdx) + 2;
+
+            int smallVal = parentIdx;
+
+            if (leftIdx < data.size() && data.get(leftIdx) < data.get(smallVal)) {
+                smallVal = leftIdx;
+            }
+
+            if (rightIdx < data.size() && data.get(rightIdx) < data.get(smallVal)) {
+                smallVal = rightIdx;
+            }
+
+            if (smallVal != parentIdx) {
+                swap(smallVal, parentIdx);
+                downheapify(smallVal);
+            }
+
+        }
+
+        public int peek() {
+            if (data.size() == 0) {
+                System.out.println("Underflow");
+                return -1;
+            }
+            return data.get(0);
+        }
+
+        public int size() {
+            return data.size();
+        }
+    }
+
+                            
