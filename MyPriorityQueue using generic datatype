@@ -1,0 +1,139 @@
+public class Main {
+    public static class MyPriorityQueue<Tree> {
+        ArrayList<Tree> al;
+        Comparator<Tree> comparator;
+
+        public MyPriorityQueue() {
+            al = new ArrayList<>();
+            comparator = null;
+        }
+
+        public MyPriorityQueue(Comparator<Tree> comparator) {
+            al = new ArrayList<>();
+            this.comparator = comparator;
+        }
+
+        public boolean isSmaller(int i, int j) {
+//            if (al.get(i) < al.get(j)) {
+//                return true;
+//            } else {
+//                return false;
+//            }
+            Comparable ith = (Comparable) al.get(i);
+            Comparable jth = (Comparable) al.get(j);
+
+            return ith.compareTo(jth) < 0;
+        }
+
+        public void add(Tree val) {
+            al.add(val);
+            upheapify(al.size() - 1);
+        }
+
+        public void upheapify(int childIdx) {
+            if (childIdx == 0) return;
+
+            int parentIdx = (childIdx - 1) / 2;
+
+            if (isSmaller(childIdx, parentIdx)) {
+                swap(childIdx, parentIdx);
+                upheapify(parentIdx);
+            }
+        }
+
+        private void swap(int i, int j) {
+            Tree ith = al.get(i);
+            Tree jth = al.get(j);
+
+            al.set(i, jth);
+            al.set(j, ith);
+        }
+
+        public Tree remove() {
+            if (this.size() == 0) {
+                System.out.println("Underflow");
+                return null;
+            }
+            swap(0, al.size() - 1);
+            Tree val = al.remove(al.size() - 1);
+            downheapify(0);
+            return val;
+        }
+
+        public void downheapify(int parentIdx) {
+            int leftIdx = (2 * parentIdx) + 1;
+            int rightIdx = (2 * parentIdx) + 2;
+
+            int smallVal = parentIdx;
+
+            if (leftIdx < al.size() && isSmaller(leftIdx, smallVal)) {
+                smallVal = leftIdx;
+            }
+
+            if (rightIdx < al.size() && isSmaller(rightIdx, smallVal)) {
+                smallVal = rightIdx;
+            }
+
+            if (smallVal != parentIdx) {
+                swap(smallVal, parentIdx);
+                downheapify(smallVal);
+            }
+
+        }
+
+        public Tree peek() {
+            if (al.size() == 0) {
+                System.out.println("Underflow");
+                return null;
+            }
+            return al.get(0);
+        }
+
+        public int size() {
+            return al.size();
+        }
+
+    }
+    public static class Student implements Comparable <Student>{
+         int rollno;
+         int height;
+         int weight;
+         int marks;
+
+         public Student(int rollno,int height,int weight, int marks){
+             this.rollno = rollno;
+             this.height = height;
+             this.weight = weight;
+             this.marks = marks;
+         }
+
+         public int compareTo(Student oth){
+             return this.height - oth.height;
+         }
+
+         public String toString(){
+             return this.height+ "->"+ "rollno "+ " == "+ this.rollno+ ", "+
+                     "weight "+ " == "+ this.weight+ ", "+
+                     "marks "+ " == "+ this.marks+ ".";
+         }
+     }
+
+    public static void main(String[] args) {
+        Student [] arr = new Student [5];
+
+       arr[0] = new Student(105,132,69,98);
+       arr[1] = new Student(100,131,79,68);
+       arr[2] = new Student(132,122,60,78);
+       arr[3] = new Student(15,112,89,90);
+       arr[4] = new Student(111,100,61,91);
+
+        MyPriorityQueue<Student> pq1 = new MyPriorityQueue<>();
+       for(Student val : arr){
+           pq1.add(val);
+       }
+
+       while(pq1.size() != 0){
+           System.out.println(pq1.remove());
+       }
+    }
+}
