@@ -1,0 +1,60 @@
+toString():- this function already inbuit in System class so if dont override it, it print the hashcode of of program because it cant compare the objects using operator....
+Comparable:- It is default interface and priorityQueue calls it .It is an interface which contains compareTo() function which take 1 input as a object and compare it with this function return the value which we want....
+Comparator:- It is an override interface pf Comparable interface, it contain only one function comapre() which take two argument and comapre it.
+public class Main {
+     public static class Student implements Comparable <Student>{
+         int rollno;
+         int height;
+         int weight;
+         int marks;
+
+         public Student(int rollno,int height,int weight, int marks){
+             this.rollno = rollno;
+             this.height = height;
+             this.weight = weight;
+             this.marks = marks;
+         }
+
+         public int compareTo(Student oth){
+             return this.height - oth.height;
+         }
+
+         public String toString(){
+             return this.height+ "->"+ "rollno "+ " == "+ this.rollno+ ", "+
+                     "weight "+ " == "+ this.weight+ ", "+
+                     "marks "+ " == "+ this.marks+ ".";
+         }
+     }
+           public static class StudentheightComparator implements Comparator<Student>{
+                public int compare(Student s1, Student s2){
+                    return s1.height - s2.height;
+                }
+            }
+
+     public static void main(String[] args) throws Exception {
+       Student [] arr = new Student [5];
+
+       arr[0] = new Student(105,132,69,98);
+       arr[1] = new Student(100,131,79,68);
+       arr[2] = new Student(132,122,60,78);
+       arr[3] = new Student(15,112,89,90);
+       arr[4] = new Student(111,100,61,91);
+
+       PriorityQueue<Student> pq1 = new PriorityQueue<>();
+       for(Student val : arr){
+           pq1.add(val);
+       }
+
+       while(pq1.size() != 0){
+           System.out.println(pq1.remove());
+       }
+       System.out.println("-------------------------------------------------");
+       PriorityQueue<Student> pq2 = new PriorityQueue<>(new StudentheightComparator());
+       for(Student val : arr){
+           pq2.add(val);
+       }
+
+       while(pq2.size() != 0){
+           System.out.println(pq2.remove());
+       }
+    }
