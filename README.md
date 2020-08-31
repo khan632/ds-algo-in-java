@@ -1,2 +1,2 @@
-# ds-algo-in-java
-here we upload all data structure's program in java
+# Graph Hashmap PriorityQueue
+here we upload all Graph Hashmap PriorityQueue program in java
